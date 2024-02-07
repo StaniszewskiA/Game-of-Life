@@ -1,7 +1,10 @@
 from grid import LifeGrid
-from patterns import Pattern
+from patterns import Pattern, get_pattern, get_all_patterns
 import time
 
+get_pattern("Blinker")
+
+"""
 blinker = Pattern("Blinker", {(2, 1), (2, 2), (2, 3)})
 grid = LifeGrid(blinker)
 
@@ -25,3 +28,4 @@ while i < 100:
     i = i + 1
 
     time.sleep(1)
+"""
