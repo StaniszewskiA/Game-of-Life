@@ -1,31 +1,33 @@
-from grid import LifeGrid
-from patterns import Pattern, get_pattern, get_all_patterns
+import sys
 import time
 
-get_pattern("Blinker")
+import views
 
-"""
-blinker = Pattern("Blinker", {(2, 1), (2, 2), (2, 3)})
-grid = LifeGrid(blinker)
+from grid import LifeGrid
+from patterns import Pattern, get_pattern, get_all_patterns
+from views import CursesView
+from cli import get_command_line_args
 
-print(grid.as_string((0, 0, 5, 5)))
+CursesView(get_pattern("Blinker"), gen=10).show()
 
-grid.evolve()
-print(grid.as_string((0, 0, 5, 5)))
+def main():
+    args = get_command_line_args()
+    View = getattr(views, args.view)
+    if args.all:
+        for pattern in get_all_patterns():
+            _show_pattern(View, pattern, args)
+    else:
+        _show_pattern(
+            View,
+            get_pattern(name=args.pattern),
+            args
+        )
 
-grid.evolve()
-print(grid.as_string((0, 0, 5, 5)))
+def _show_pattern(View, pattern, args):
+    try:
+        View(pattern=pattern, gen=args.gen, frame_rate=args.fps).show()
+    except Exception as error:
+        print(error, file=sys.stderr)
 
-
-grid.evolve()
-print(grid.as_string((0, 0, 5, 5)))
-
-i = 0
-
-while i < 100:
-    grid.evolve()
-    print(grid.as_string((0, 0, 5, 5)))
-    i = i + 1
-
-    time.sleep(1)
-"""
+if __name__ == "__main__":
+    main()

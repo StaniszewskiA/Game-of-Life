@@ -6,7 +6,8 @@ try:
 except ImportError:
     import tomli as tomllib
 
-PATTERNS_FILE = Path(__file__).parent / "pattens.toml"
+PATTERNS_FILE = Path(__file__).parent / "patterns.toml"
+
 def get_pattern(name, filename=PATTERNS_FILE):
     data = tomllib.loads(filename.read_text(encoding="utf-8"))
     return Pattern.from_toml(name, toml_data=data[name])
